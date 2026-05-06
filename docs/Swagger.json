@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-commerce Backend API",
+    "version": "1.0.0",
+    "description": "API documentation for the Capstone E-commerce backend project"
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local development server" }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "description": "List of products",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Product" } } } }
+          }
+        }
+      }
+    },
+    "/products/{category}": {
+      "get": {
+        "summary": "Get products by category",
+        "parameters": [{ "name": "category", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "List of products in category",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Product" } } } }
+          }
+        }
+      }
+    },
+    "/api/cart": {
+      "post": {
+        "summary": "Add product to cart",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Cart" } } } },
+        "responses": { "200": { "description": "Product added to cart" } }
+      },
+      "get": {
+        "summary": "Get all cart items",
+        "responses": {
+          "200": {
+            "description": "List of cart items",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Cart" } } } }
+          }
+        }
+      }
+    },
+    "/api/favorites": {
+      "post": {
+        "summary": "Add product to favorites",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Favorite" } } } },
+        "responses": { "200": { "description": "Product added to favorites" } }
+      },
+      "get": {
+        "summary": "Get all favorites",
+        "responses": {
+          "200": {
+            "description": "List of favorites",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Favorite" } } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "productId": { "type": "string" },
+          "quantity": { "type": "integer" }
+        }
+      },
+      "Favorite": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "productId": { "type": "string" }
+        }
+      }
+    }
+  }
+}
